@@ -142,8 +142,10 @@ function MongoDbMetastore(options) {
 					}
 				});
 			}
-	} else {
+	} else if (options.configParams["orion.mongodb.url"]) {
 		mongoose.connect(options.configParams["orion.mongodb.url"]);
+	} else {
+		mongoose.connect("mongodb://localhost/orion_multitenant");
 	}
 	api.getOrionEE().on("close-server", function() {
 		logger.info("Closing MongoDB");
